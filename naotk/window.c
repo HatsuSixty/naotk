@@ -26,5 +26,8 @@ void ntk_window_set_main_widget(Ntk_Window* window, Ntk_Widget* widget)
 
 int ntk_window_run(Ntk_Window* ntk_window)
 {
+    if (!ui_is_initialized())
+        ui_init();
+
     return render_window(ntk_window);
 }

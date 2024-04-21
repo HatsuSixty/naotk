@@ -17,7 +17,10 @@
 #include <rlgl.h>
 #include <string.h>
 
-#define MOUSE_BUTTON_MAX 8
+struct {
+    bool initialized;
+    int active_button_id;
+} UI;
 
 static void window_size_callback(GLFWwindow* window, int width, int height)
 {
@@ -64,8 +67,15 @@ static void draw_widget(GLFWwindow* window, Rectangle area, Ntk_Widget* widget)
         draw_rectangle_rounded(area, BUTTON_ROUNDNESS, ROUNDNESS_SEGMENTS,
                                button_color);
 
-        if (hovered && is_mouse_button_just_released(GLFW_MOUSE_BUTTON_LEFT))
-            widget->widget.button.callback(widget->widget.button.callback_data);
+        if (hovered && is_mouse_button_just_pressed(GLFW_MOUSE_BUTTON_LEFT)) {
+            UI.active_button_id = widget->id;
+        } else if (UI.active_button_id != -1 && UI.active_button_id == widget->id) {
+            if (is_mouse_button_just_released(GLFW_MOUSE_BUTTON_LEFT)) {
+                UI.active_button_id = -1;
+                if (hovered)
+                    widget->widget.button.callback(widget->widget.button.callback_data);
+            }
+        }
     } break;
 
     case NTK_WIDGET_TYPE_ROW_CONTAINER: {
@@ -99,6 +109,18 @@ static void draw_widget(GLFWwindow* window, Rectangle area, Ntk_Widget* widget)
         }
     } break;
     }
+}
+
+void ui_init(void)
+{
+    memset(&UI, 0, sizeof(UI));
+    UI.active_button_id = -1;
+    UI.initialized = true;
+}
+
+bool ui_is_initialized(void)
+{
+    return UI.initialized;
 }
 
 int render_window(Ntk_Window* ntk_window)
