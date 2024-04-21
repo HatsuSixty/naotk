@@ -3,6 +3,6 @@
 
 #include "ntk/types.h"
 
-int renderer_init_window(Ntk_Window* ntk_window);
+int render_window(Ntk_Window* ntk_window);
 
 #endif // RENDERER_H_

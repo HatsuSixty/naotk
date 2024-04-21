@@ -12,9 +12,9 @@ naotk = library(
     'util.c',
     'list.c',
     'window.c',
-    'renderer/renderer.c',
-    'renderer/shapes.c',
-    'input.c',
+    'interaction/ui.c',
+    'interaction/shapes.c',
+    'interaction/input.c',
     'rlgl.c',
   ], include_directories : [
     naotk_inc,

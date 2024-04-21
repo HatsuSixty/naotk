@@ -1,4 +1,4 @@
-#include "renderer.h"
+#include "ui.h"
 
 #include "ntk/list.h"
 #include "ntk/types.h"
@@ -101,7 +101,7 @@ static void draw_widget(GLFWwindow* window, Rectangle area, Ntk_Widget* widget)
     }
 }
 
-int renderer_init_window(Ntk_Window* ntk_window)
+int render_window(Ntk_Window* ntk_window)
 {
     assert(ntk_window->main_widget && "Main widget not set");
 
