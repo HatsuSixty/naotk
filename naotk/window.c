@@ -31,3 +31,11 @@ int ntk_window_run(Ntk_Window* ntk_window)
 
     return render_window(ntk_window);
 }
+
+void ntk_window_close(Ntk_Window *window)
+{
+    /*
+     * Anti-clang-format comment
+     */
+    window->should_quit = true;
+}

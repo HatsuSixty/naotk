@@ -186,6 +186,9 @@ int render_window(Ntk_Window* ntk_window)
         };
         draw_widget(window, rectangle, ntk_window->main_widget);
 
+        if (ntk_window->should_quit)
+            glfwSetWindowShouldClose(window, 1);
+
         update_input_state(window);
         rlDrawRenderBatchActive();
         glfwSwapBuffers(window);
